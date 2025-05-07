@@ -16,7 +16,7 @@ class HollowGym(WebSocketGym):
         self.action_space_dim = 4**4
         self.action_space = gym.spaces.Discrete(self.action_space_dim)
         self._action_to_action_code = {
-            i : np.base_repr(i, 4, 3)[:4] for i in range(self.action_space_dim)
+            i : np.base_repr(i, 4, 5)[-4:] for i in range(self.action_space_dim)
         }
 
         self.observation_space = gym.spaces.Dict({
@@ -33,6 +33,9 @@ class HollowGym(WebSocketGym):
 
     @staticmethod
     def preprocess_observation(obs: dict) -> np.ndarray:
+        if obs["BossFsmStateOneHot"] is None:
+            obs["BossFsmStateOneHot"] = [0] * 85
+
         flat = np.array([
             obs["PlayerHpPerc"],
             obs["PlayerMpPerc"],
