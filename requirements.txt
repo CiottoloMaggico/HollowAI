@@ -1,0 +1,75 @@
+anyascii==0.3.2
+asgiref==3.7.2
+beautifulsoup4==4.11.2
+binaryornot==0.4.4
+Brotli @ file:///croot/brotli-split_1736182456865/work
+cloudpickle @ file:///croot/cloudpickle_1721657346512/work
+contourpy @ file:///croot/contourpy_1732540045555/work
+cookiecutter==2.6.0
+cycler @ file:///tmp/build/80754af9/cycler_1637851556182/work
+defusedxml==0.7.1
+django-filter==23.5
+django-modelcluster==6.3
+django-permissionedforms==0.1
+django-taggit==4.0.0
+django-treebeard==4.7.1
+djangorestframework==3.14.0
+draftjs-exporter==2.1.7
+et-xmlfile==1.1.0
+Farama-Notifications @ file:///work/perseverance-python-buildout/croot/farama-notifications_1698885704889/work
+filelock @ file:///croot/filelock_1744281381737/work
+filetype==1.2.0
+fonttools @ file:///croot/fonttools_1737039080035/work
+fsspec @ file:///croot/fsspec_1736274672181/work
+gmpy2 @ file:///croot/gmpy2_1738085463648/work
+gymnasium @ file:///home/conda/feedstock_root/build_artifacts/gymnasium-split_1732344924933/work
+html5lib==1.1
+importlib_metadata @ file:///croot/importlib_metadata-suite_1732633488278/work
+jax-jumpy @ file:///home/conda/feedstock_root/build_artifacts/jax-jumpy_1734209928065/work
+Jinja2==3.1.3
+kiwisolver @ file:///croot/kiwisolver_1737039087198/work
+l18n==2021.3
+markdown-it-py==3.0.0
+MarkupSafe @ file:///croot/markupsafe_1738584038848/work
+matplotlib==3.10.1
+mdurl==0.1.2
+mpmath @ file:///work/perseverance-python-buildout/croot/mpmath_1698864994882/work
+networkx @ file:///croot/networkx_1737039604450/work
+numpy @ file:///croot/numpy_and_numpy_base_1725470312869/work/dist/numpy-2.0.1-cp312-cp312-linux_x86_64.whl#sha256=0a2920303d36e9da3063f2d20885cb28d54fe6af2e1bee9bb30b48855a54664e
+openpyxl==3.1.2
+optree @ file:///croot/optree_1742210181724/work
+orjson @ file:///croot/orjson_1737039092779/work
+packaging @ file:///croot/packaging_1734472117206/work
+pillow @ file:///home/conda/feedstock_root/build_artifacts/pillow_1712154464349/work
+pillow_heif==0.15.0
+ply @ file:///work/perseverance-python-buildout/croot/ply_1698846188635/work
+pybind11 @ file:///croot/pybind11-split_1738944777954/work
+pybind11_global @ file:///croot/pybind11-split_1738944777954/work
+pyparsing @ file:///croot/pyparsing_1731445506121/work
+PyQt5==5.15.10
+PyQt5_sip @ file:///croot/pyqt-split_1736540531116/work/pyqt_sip
+PySide6==6.7.2
+python-dateutil @ file:///croot/python-dateutil_1716495738603/work
+python-slugify==8.0.4
+rich==13.7.1
+scapy==2.5.0
+setuptools==78.1.1
+shiboken6==6.7.2
+sip @ file:///croot/sip_1736541134699/work
+six @ file:///croot/six_1744271502820/work
+sqlparse==0.4.4
+sympy @ file:///croot/sympy_1738108488918/work
+telepath==0.3.1
+tensordict @ file:///home/conda/feedstock_root/build_artifacts/tensordict_1746021512866/work
+text-unidecode==1.3
+torch @ file:///home/conda/feedstock_root/build_artifacts/libtorch_1739474892959/work
+torchrl @ file:///home/conda/feedstock_root/build_artifacts/pytorchrl_1739603531588/work
+tornado @ file:///croot/tornado_1733960490606/work
+types-python-dateutil==2.9.0.20240316
+typing_extensions @ file:///croot/typing_extensions_1734714854207/work
+unicodedata2 @ file:///croot/unicodedata2_1736541023050/work
+webencodings==0.5.1
+websockets @ file:///home/conda/feedstock_root/build_artifacts/websockets_1741285453827/work
+wheel==0.45.1
+Willow==1.6.3
+zipp @ file:///croot/zipp_1732630741423/work
