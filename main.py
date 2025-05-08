@@ -1,8 +1,21 @@
 import asyncio
-from Gym.HollowGym import HollowGym
-from Core.Agent import Agent
-import numpy as np
+import logging
+import sys
+
+import gymnasium as gym
+import envs
 import matplotlib.pyplot as plt
+import numpy as np
+
+from Core.Agent import Agent
+from envs.HollowGym import HollowGym
+from utils.websockets.servers import HollowGymServer
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[logging.FileHandler("logs/debug.log"), logging.StreamHandler(sys.stdout)],
+)
 
 def plot_learning_curve(x, scores, figure_file):
     running_avg = [np.mean(scores[max(0, i-100):(i+1)]) for i in range(len(scores))]
@@ -12,16 +25,22 @@ def plot_learning_curve(x, scores, figure_file):
     plt.savefig(figure_file)
 
 async def main():
-    env = HollowGym(server_ip="", server_port="4649")
+    socket_server = HollowGymServer("", 4649)
+    await socket_server.mod_client_ready.wait()
+    env = HollowGym(socket_server = socket_server)
 
-    N = 5  # learning frequency
+    N = 4  # learning frequency
     batch_size = 5
-    n_games = 1000
-    n_epochs = 4
-    alpha = 0.0003  # learning rate
+    n_games = 5000
+    n_epochs = 400
+    alpha = 2.5e-4  # learning rate
 
-    agent = Agent(n_actions=255, input_dims=95,
-                  batch_size=batch_size, alpha=alpha, n_epochs=n_epochs)
+    agent = Agent(
+        env=env,
+        batch_size=batch_size,
+        alpha=alpha,
+        n_epochs=n_epochs
+    )
 
     best_score = 0
     score_history = []
@@ -29,7 +48,6 @@ async def main():
     avg_score = 0
     n_steps = 0
 
-    await asyncio.sleep(20)
     print("Starting training...")
     for i in range(n_games):
         observation, _ = await env.reset()
