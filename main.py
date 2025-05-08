@@ -42,12 +42,16 @@ async def main():
         n_epochs=n_epochs
     )
 
-    best_score = 0
+    try:
+        agent.load_models()
+    except FileNotFoundError:
+        logging.warning("No saved models found, proceeding anyway from scratch")
+
+    best_score = -450
     score_history = []
     learn_iters = 0
     avg_score = 0
     n_steps = 0
-
 
     logger.info("Initialization done, starting training")
     for i in range(n_games):
