@@ -7,7 +7,7 @@ import envs
 import matplotlib.pyplot as plt
 import numpy as np
 
-from Core.Agent import Agent
+from core.Agent import Agent
 from envs.HollowGym import HollowGym
 from utils.websockets.servers import HollowGymServer
 
@@ -29,10 +29,10 @@ async def main():
     await socket_server.mod_client_ready.wait()
     env = HollowGym(socket_server = socket_server)
 
-    N = 4  # learning frequency
+    N = 10  # learning frequency
     batch_size = 5
     n_games = 5000
-    n_epochs = 400
+    n_epochs = 200
     alpha = 2.5e-4  # learning rate
 
     agent = Agent(
@@ -47,6 +47,7 @@ async def main():
     learn_iters = 0
     avg_score = 0
     n_steps = 0
+
 
     print("Starting training...")
     for i in range(n_games):

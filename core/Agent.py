@@ -94,3 +94,4 @@ class Agent:
                 self.critic.optimizer.step()
 
         self.memory.clear_memory()
+
