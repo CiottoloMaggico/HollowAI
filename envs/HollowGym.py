@@ -19,7 +19,7 @@ class HollowGym:
             i : np.base_repr(i, 4, 5)[-4:] for i in range(4**4)
         }
 
-        self.observation_space = gym.spaces.Box(low=0.0, high=1.0, shape=(96,), dtype=np.float32)
+        self.observation_space = gym.spaces.Box(low=0.0, high=1.0, shape=(97,), dtype=np.float32)
 
     def _get_observation(self, message):
         obs = message["Data"]["Observation"]
@@ -33,6 +33,7 @@ class HollowGym:
                 obs["BossHpPerc"],
                 *obs["BossPos"],
                 obs["BossFacingRight"],
+                obs["PlayerBossDistance"],
                 *obs["BossFsmStateOneHot"],
             ], dtype=np.float32,
         )
