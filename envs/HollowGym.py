@@ -1,16 +1,11 @@
-import logging
-
 import gymnasium as gym
 import numpy as np
 
 from utils.websockets.exceptions import ModClientNotConnected
 from utils.websockets.servers import HollowGymServer
 
-logger = logging.getLogger(__name__)
-asyncioLogger = logging.getLogger("asyncio")
 
-
-class HollowGym:
+class HollowGym(gym.Env):
     def __init__(self, socket_server : HollowGymServer):
         self.socket_server = socket_server
 
@@ -38,28 +33,28 @@ class HollowGym:
             ], dtype=np.float32,
         )
 
-    async def reset(self, seed=None, options=None):
+    def reset(self, seed=None, options=None):
         try:
-            response = await self.socket_server.message_exchange(1)
+            response = self.socket_server.message_exchange(1)
         except ModClientNotConnected:
-            await self.socket_server.mod_client_ready.wait()
-            return await self.reset()
+            self.socket_server.mod_client_ready.wait()
+            return self.reset()
 
         obs = self._get_observation(response)
-        info = None
+        info = {}
         return obs, info
 
-    async def step(self, action):
+    def step(self, action):
         try:
-            response = await self.socket_server.message_exchange(2, self._action_to_action_code[action])
+            response = self.socket_server.message_exchange(2, self._action_to_action_code[action])
         except ModClientNotConnected:
-            await self.socket_server.mod_client_ready.wait()
-            return await self.reset()
+            self.socket_server.mod_client_ready.wait()
+            return self.reset()
 
         obs = self._get_observation(response)
         reward = response["Data"]["MetaData"]["Reward"]
         terminated = response["Data"]["MetaData"]["Terminated"]
         truncated = False
-        info = None
+        info = {}
 
         return obs, reward, terminated, truncated, info

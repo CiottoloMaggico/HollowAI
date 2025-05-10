@@ -1,16 +1,16 @@
-import asyncio
 import logging
 import sys
 
-import gymnasium as gym
-import envs
 import matplotlib.pyplot as plt
 import numpy as np
+from stable_baselines3 import DQN
+from stable_baselines3.common.env_checker import check_env
+from stable_baselines3.common.logger import configure
 
-from core.Agent import Agent
 from envs.HollowGym import HollowGym
 from utils.websockets.servers import HollowGymServer
 
+new_logger = configure("logs/", ["stdout", "log", "tensorboard"])
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
@@ -18,76 +18,28 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-def plot_learning_curve(x, scores, figure_file):
-    running_avg = [np.mean(scores[max(0, i-100):(i+1)]) for i in range(len(scores))]
-
-    plt.plot(x, running_avg)
-    plt.title('Running average of previous 100 scores')
-    plt.savefig(figure_file)
-
-async def main():
-    N = 10  # learning frequency
-    batch_size = 5
-    n_games = 5000
-    n_epochs = 200
-    alpha = 2.5e-4  # learning rate
-
+def main():
+    n_games = 1000
+    n_epochs = 400
     socket_server = HollowGymServer("", 4649)
-    await socket_server.mod_client_ready.wait()
+    socket_server.start()
+    socket_server.mod_client_ready.wait()
+
     env = HollowGym(socket_server = socket_server)
-    agent = Agent(
-        env=env,
-        batch_size=batch_size,
-        alpha=alpha,
-        n_epochs=n_epochs
+    check_env(env, warn=True, skip_render_check=True)
+
+    model = DQN(
+        "MlpPolicy",
+        env,
+        verbose=1,
+        learning_rate=8e-5,
+        batch_size=32,
+        train_freq=(4, "step"),
+        tensorboard_log="logs/",
     )
-
-    try:
-        agent.load_models()
-    except FileNotFoundError:
-        logging.warning("No saved models found, proceeding anyway from scratch")
-
-    best_score = -450
-    score_history = []
-    learn_iters = 0
-    avg_score = 0
-    n_steps = 0
-
-    logger.info("Initialization done, starting training")
-    for i in range(n_games):
-        observation, _ = await env.reset()
-        done = False
-        score = 0
-
-        while not done:
-            action, prob, val = agent.choose_action(observation)
-            logger.info(f"action chosen: {action}")
-
-            observation_, reward, done, _, _ = await env.step(action)
-            n_steps += 1
-            score += reward
-            logger.info(f"new obs:\n{observation_}")
-
-            agent.remember(observation, action, prob, val, reward, done)
-            if n_steps % N == 0:
-                agent.learn()
-                learn_iters += 1
-
-            observation = observation_
-
-        score_history.append(score)
-        avg_score = np.mean(score_history[-100:])
-
-        if avg_score > best_score:
-            best_score = avg_score
-            agent.save_models()
-
-        x = [i + 1 for i in range(len(score_history))]
-        plot_learning_curve(x, score_history, "ppo_learning_curve.png")
-
-        logging.info(
-            f"episode: {i}, score: {score}, avg_score: {avg_score}, time_steps: {n_steps}, learning_steps: {learn_iters}"
-        )
+    model.set_logger(new_logger)
+    model.learn(total_timesteps=n_epochs * n_games)
+    model.save("ppo_hornet_v2")
 
 if (__name__ == "__main__"):
-    asyncio.run(main())
+    main()
