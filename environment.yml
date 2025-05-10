@@ -4,8 +4,10 @@ channels:
   - https://repo.anaconda.com/pkgs/r
 dependencies:
   - python=3.12
-  - websockets
-  - conda-forge::pytorchrl
+  - conda-forge::websockets
+  - conda-forge::pytorch
   - conda-forge::gymnasium
+  - conda-forge::stable-baselines3
   - conda-forge::matplotlib
-prefix: /home/ciottolomaggico/anaconda3/envs/HollowAI
+  - conda-forge::tensorboard
+prefix: C:/Users/Kanemo/anaconda3/envs/HollowAI
