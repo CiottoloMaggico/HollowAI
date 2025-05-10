@@ -1,34 +1,40 @@
-from stable_baselines3.common.callbacks import CheckpointCallback
 import numpy as np
+from stable_baselines3.common.callbacks import BaseCallback
 
-class TensorboardLogger(CheckpointCallback):
 
-    def __init__(self, save_freq, save_path, name_prefix="model", verbose=0):
-        super().__init__(save_freq=save_freq, save_path=save_path, name_prefix=name_prefix, verbose=verbose)
-        self.agent_health = []
-        self.boss_health = []
-        self.wins = 0
+class LoggingCallback(BaseCallback):
+
+    def __init__(self, verbose: int = 0, log_every_steps: int = 1000):
+        super().__init__(verbose=verbose)
+        self.log_every_steps = log_every_steps
+
+    def _on_training_start(self) -> None:
+        self.agent_health = [[]] * self.training_env.num_envs
+        self.boss_health = [[]] * self.training_env.num_envs
+        self.wins_n = 0
+        self.episodes_n = 0
 
     def _on_step(self) -> bool:
+        new_obs = self.locals["new_obs"]
+        dones = self.locals["dones"]
 
-        super()._on_step()
-        obs = self.locals.get("new_obs", [])
-        dones = self.locals.get("dones", [])
+        for i in range(0, self.training_env.num_envs):
+            obs_n, done_n = new_obs[i], dones[i]
+            self.agent_health[0] += [obs_n[0]]
+            self.boss_health[0] += [obs_n[6]]
+            # TODO: add win in the "info" received from the mod client
+            self.wins_n += 1 if obs_n[6] == 0 and obs_n[0] > 0 and done_n else 0
+            self.episodes_n += 1 if done_n else 0
 
-        self.agent_health.append(obs[0, 0])
-        self.boss_health.append(obs[0, 6])
-        if(dones[0]): self.wins+=1
+            if (done_n):
+                self.logger.record("custom/avg_agent_health", np.mean(self.agent_health))
+                self.logger.record("custom/avg_boss_health", np.mean(self.boss_health))
 
-        return True # False to stop the model : could be used for Early Stopping
-
-    def _on_rollout_end(self) -> None:
-        # Called after each rollout. Save metrics to file or plot
-        self.logger.record("custom/avg_agent_health", np.mean(self.agent_health)) # should increase over time
-        self.logger.record("custom/avg_boss_health", np.mean(self.boss_health))   # should decrease over time
-        self.logger.record("custom/win_rate", self.wins/self.save_freq) # HOPE it increases
-
-        self.boss_health.clear()
-        self.agent_health.clear()
-        self.wins = 0
+                self.agent_health[i].clear()
+                self.boss_health[i].clear()
 
 
+        if self.num_timesteps % self.log_every_steps == 0:
+            self.logger.record("custom/win_rate", self.wins_n/self.episodes_n)
+
+        return True
