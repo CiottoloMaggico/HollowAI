@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d351a28c-dfbc-4713-8c9b-b38338046599" name="Changes" comment="saving models">
+    <list default="true" id="d351a28c-dfbc-4713-8c9b-b38338046599" name="Changes" comment="adding callbacks">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/HollowGym.py" beforeDir="false" afterPath="$PROJECT_DIR$/envs/HollowGym.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/logger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/websockets/servers.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/websockets/servers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,6 +131,10 @@
       <workItem from="1746776010100" duration="4491000" />
       <workItem from="1746816820844" duration="21449000" />
       <workItem from="1746911783726" duration="6459000" />
+      <workItem from="1746918258382" duration="39000" />
+      <workItem from="1746947773668" duration="884000" />
+      <workItem from="1746954287960" duration="6924000" />
+      <workItem from="1746970459316" duration="644000" />
     </task>
     <task id="LOCAL-00001" summary="Working gym, need huge refactoring">
       <option name="closed" value="true" />
@@ -192,7 +200,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746859333032</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="adding callbacks">
+      <option name="closed" value="true" />
+      <created>1746918292701</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1746918292701</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -214,9 +230,10 @@
     <MESSAGE value="Improved gym, todo: models" />
     <MESSAGE value="Observation improvements" />
     <MESSAGE value="saving models" />
-    <option name="LAST_COMMIT_MESSAGE" value="saving models" />
+    <MESSAGE value="adding callbacks" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding callbacks" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/HollowAI$main.coverage" NAME="main Coverage Results" MODIFIED="1746917101464" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/HollowAI$main.coverage" NAME="main Coverage Results" MODIFIED="1746960229861" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

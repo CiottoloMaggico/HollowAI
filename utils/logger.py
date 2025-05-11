@@ -16,14 +16,14 @@ class LoggingCallback(BaseCallback):
 
     def _on_step(self) -> bool:
         new_obs = self.locals["new_obs"]
+        infos = self.locals["infos"]
         dones = self.locals["dones"]
 
         for i in range(0, self.training_env.num_envs):
-            obs_n, done_n = new_obs[i], dones[i]
+            obs_n, info_n, done_n = new_obs[i], infos[i], dones[i]
             self.agent_health[0] += [obs_n[0]]
             self.boss_health[0] += [obs_n[6]]
-            # TODO: add win in the "info" received from the mod client
-            self.wins_n += 1 if obs_n[6] == 0 and obs_n[0] > 0 and done_n else 0
+            self.wins_n += 1 if info_n["Win"] else 0
             self.episodes_n += 1 if done_n else 0
 
             if (done_n):

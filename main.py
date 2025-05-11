@@ -4,8 +4,9 @@ import sys
 from stable_baselines3 import DQN
 from stable_baselines3.common.callbacks import CheckpointCallback, CallbackList
 from stable_baselines3.common.logger import configure
+from stable_baselines3.common.env_checker import check_env
 
-from envs.HollowGym import HollowGym
+from envs.HollowGym import HollowGym, create_env
 from utils.logger import LoggingCallback
 from utils.websockets.servers import HollowGymServer
 
@@ -25,11 +26,7 @@ def main():
     n_games = 1000
     n_epochs = 400
 
-    socket_server = HollowGymServer("", 4649)
-    socket_server.start()
-    socket_server.mod_client_ready.wait()
-
-    env = HollowGym(socket_server = socket_server)
+    env = create_env("",  4649, 5, 2,"Hornet Boss 1", "GG_Hornet_1")
     check_env(env, warn=True, skip_render_check=True)
 
     checkpoint_callback = CheckpointCallback(
@@ -39,10 +36,7 @@ def main():
         save_replay_buffer=True,
         save_vecnormalize=True,
     )
-    logging_callback = LoggingCallback(
-        verbose=2,
-        log_every_steps=300
-    )
+    logging_callback = LoggingCallback(verbose=1, log_every_steps=500)
     env_callback = CallbackList([checkpoint_callback, logging_callback])
 
 
