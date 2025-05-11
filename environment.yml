@@ -2,10 +2,12 @@ name: HollowAI
 channels:
   - https://repo.anaconda.com/pkgs/main
   - https://repo.anaconda.com/pkgs/r
+  - https://conda.anaconda.org/conda-forge/
 dependencies:
   - python=3.12
   - websockets
-  - conda-forge::pytorchrl
-  - conda-forge::gymnasium
-  - conda-forge::matplotlib
-prefix: /home/ciottolomaggico/anaconda3/envs/HollowAI
+  - pytorchrl
+  - gymnasium
+  - matplotlib
+# WE DON'T WANT PREFIX
+#prefix: /home/ciottolomaggico/anaconda3/envs/HollowAI

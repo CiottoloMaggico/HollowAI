@@ -55,6 +55,9 @@ class ActorNetwork(nn.Module):
                  fc1_dims=32, fc2_dims=32, chkpt_dir='tmp/ppo'):
         super(ActorNetwork, self).__init__()
 
+        if not os.path.exists(chkpt_dir):
+            os.makedirs(chkpt_dir)
+
         self.checkpoint_file = os.path.join(chkpt_dir, 'actor_torch_ppo')
         self.actor = nn.Sequential(
             nn.Linear(input_dims, fc1_dims),

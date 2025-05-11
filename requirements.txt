@@ -1,0 +1,4 @@
+gymnasium==1.1.1
+matplotlib==3.10.3
+torch==2.7.0
+websockets==15.0.1

@@ -11,6 +11,9 @@ from core.Agent import Agent
 from envs.HollowGym import HollowGym
 from utils.websockets.servers import HollowGymServer
 
+
+# Create log
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
@@ -55,6 +58,7 @@ async def main():
 
     logger.info("Initialization done, starting training")
     for i in range(n_games):
+        logging.info(f"Starting game {i}")
         observation, _ = await env.reset()
         done = False
         score = 0
@@ -81,6 +85,9 @@ async def main():
         if avg_score > best_score:
             best_score = avg_score
             agent.save_models()
+
+
+        logging.info("Test")
 
         x = [i + 1 for i in range(len(score_history))]
         plot_learning_curve(x, score_history, "ppo_learning_curve.png")
