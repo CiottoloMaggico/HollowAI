@@ -1,6 +1,7 @@
+import logging
+
 import numpy as np
 from stable_baselines3.common.callbacks import BaseCallback
-
 
 class LoggingCallback(BaseCallback):
 
@@ -21,10 +22,12 @@ class LoggingCallback(BaseCallback):
 
         for i in range(0, self.training_env.num_envs):
             obs_n, info_n, done_n = new_obs[i], infos[i], dones[i]
+            self.logger.info(obs_n)
             self.agent_health[0] += [obs_n[0]]
             self.boss_health[0] += [obs_n[6]]
             self.wins_n += 1 if info_n["Win"] else 0
             self.episodes_n += 1 if done_n else 0
+
 
             if (done_n):
                 self.logger.record("custom/avg_agent_health", np.mean(self.agent_health))
