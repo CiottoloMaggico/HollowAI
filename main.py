@@ -26,7 +26,7 @@ def main():
     n_games = 1000
     n_epochs = 400
 
-    env = create_env("",  4649, 5, 2,"Hornet Boss 1", "GG_Hornet_1")
+    env = create_env("",  4649, 4, 2,"Hornet Boss 1", "GG_Hornet_1")
     check_env(env, warn=True, skip_render_check=True)
 
     checkpoint_callback = CheckpointCallback(
