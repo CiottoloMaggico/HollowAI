@@ -1,14 +1,13 @@
-import asyncio
 import logging
 import sys
 
-import gymnasium as gym
-import envs
-import matplotlib.pyplot as plt
-import numpy as np
+from stable_baselines3 import DQN
+from stable_baselines3.common.callbacks import CheckpointCallback, CallbackList
+from stable_baselines3.common.logger import configure
+from stable_baselines3.common.env_checker import check_env
 
-from core.Agent import Agent
-from envs.HollowGym import HollowGym
+from envs.HollowGym import HollowGym, create_env
+from utils.logger import LoggingCallback
 from utils.websockets.servers import HollowGymServer
 
 
@@ -19,37 +18,31 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[logging.FileHandler("logs/debug.log"), logging.StreamHandler(sys.stdout)],
 )
-logger = logging.getLogger(__name__)
+model_logger = configure(
+    "logs/",
+    ["stdout", "tensorboard"]
+)
+main_logger = logging.getLogger(__name__)
 
-def plot_learning_curve(x, scores, figure_file):
-    running_avg = [np.mean(scores[max(0, i-100):(i+1)]) for i in range(len(scores))]
 
-    plt.plot(x, running_avg)
-    plt.title('Running average of previous 100 scores')
-    plt.savefig(figure_file)
+def main():
+    total_time_steps = 500_000
 
-async def main():
-    N = 10  # learning frequency
-    batch_size = 5
-    n_games = 5000
-    n_epochs = 200
-    alpha = 2.5e-4  # learning rate
+    env = create_env("",  4649, 4, 2,"Hornet Boss 1", "GG_Hornet_1")
+    check_env(env, warn=True, skip_render_check=True)
 
-    socket_server = HollowGymServer("", 4649)
-    await socket_server.mod_client_ready.wait()
-    env = HollowGym(socket_server = socket_server)
-    agent = Agent(
-        env=env,
-        batch_size=batch_size,
-        alpha=alpha,
-        n_epochs=n_epochs
+    checkpoint_callback = CheckpointCallback(
+        save_freq=25_000,
+        save_path="./checkpoints/",
+        name_prefix="ppo_hornet_v2",
+        save_replay_buffer=True,
+        save_vecnormalize=True,
     )
+    logging_callback = LoggingCallback(verbose=1, log_every_steps=500)
+    env_callback = CallbackList([checkpoint_callback, logging_callback])
 
-    try:
-        agent.load_models()
-    except FileNotFoundError:
-        logging.warning("No saved models found, proceeding anyway from scratch")
 
+<<<<<<< HEAD
     best_score = -450
     score_history = []
     learn_iters = 0
@@ -95,6 +88,32 @@ async def main():
         logging.info(
             f"episode: {i}, score: {score}, avg_score: {avg_score}, time_steps: {n_steps}, learning_steps: {learn_iters}"
         )
+=======
+    model = DQN(
+        "MlpPolicy",
+        env,
+        verbose=1,
+        learning_starts=5000,   # to not reinforce bad guesses due to initial exploration (+ let buffer fill up)
+        learning_rate=1e-5,     # how big each update to the Q-network weights is during training.
+        gamma=0.99,             # discount factor: how much an agent prioritizes future rewards over immediate ones
+        tau=1,                  # soft update coeff: how fast the target network moves toward the online network
+        buffer_size=100_000,
+        batch_size=64,
+        train_freq=(4, "step"),
+        gradient_steps=1,       # how many gradient updates per step
+        exploration_initial_eps=1.0,    # start exploration rate
+        exploration_final_eps=0.1,      # end exploration rate
+        exploration_fraction=0.5,       # expl. rate will linearly decrease from start to end in (exploration_fraction * total_timesteps) steps
+        tensorboard_log="logs/",
+    )
+    model.set_logger(model_logger)
+    model.learn(
+        total_timesteps=total_time_steps,
+        callback=env_callback,
+        tb_log_name="Main training loop"
+    )
+    model.save("checkpoints/ppo_hornet_v2")
+>>>>>>> 1a554fa22ccaf4cb4438b7fbd3e20c48e2ea876a
 
 if (__name__ == "__main__"):
-    asyncio.run(main())
+    main()
