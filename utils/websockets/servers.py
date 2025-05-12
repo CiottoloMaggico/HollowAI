@@ -4,6 +4,7 @@ import queue
 import threading
 
 from websockets.sync.server import serve
+import websockets
 
 from . import exceptions
 
@@ -20,6 +21,7 @@ class HollowGymServer:
         self.mod_client_ready = threading.Event()
         self.incoming_messages = queue.Queue()
 
+        self.observation_size = None
         self.frame_skip = frame_skip
         self.game_speed = game_speed
         self.boss_name = boss_name
@@ -61,6 +63,7 @@ class HollowGymServer:
                     logging.error("response from mod client can't be json decoded, ignoring the message")
 
                 if (json_response["Cmd"] == 4):
+                    self.observation_size = json_response["Data"]["Info"]["ObservationSize"]
                     self.mod_client_ready.set()
             else:
                 self.incoming_messages.put_nowait(json_message)

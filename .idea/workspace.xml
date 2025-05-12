@@ -6,8 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="d351a28c-dfbc-4713-8c9b-b38338046599" name="Changes" comment="mod setup">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/PPO.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/HollowGym.py" beforeDir="false" afterPath="$PROJECT_DIR$/envs/HollowGym.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/logger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/websockets/servers.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/websockets/servers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +25,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -132,6 +140,8 @@
       <workItem from="1746947773668" duration="884000" />
       <workItem from="1746954287960" duration="6924000" />
       <workItem from="1746970459316" duration="3807000" />
+      <workItem from="1747039721770" duration="18000" />
+      <workItem from="1747062657065" duration="7836000" />
     </task>
     <task id="LOCAL-00001" summary="Working gym, need huge refactoring">
       <option name="closed" value="true" />
@@ -240,6 +250,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="mod setup" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/HollowAI$main.coverage" NAME="main Coverage Results" MODIFIED="1746976176521" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/HollowAI$main.coverage" NAME="main Coverage Results" MODIFIED="1747083496365" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

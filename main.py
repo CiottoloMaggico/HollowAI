@@ -12,7 +12,6 @@ from utils.websockets.servers import HollowGymServer
 
 
 # Create log
-
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
@@ -20,13 +19,13 @@ logging.basicConfig(
 )
 model_logger = configure(
     "logs/",
-    ["stdout", "tensorboard"]
+    ["tensorboard"]
 )
 main_logger = logging.getLogger(__name__)
 
 
 def main():
-    total_time_steps = 500_000
+    total_time_steps = 1_000_000
 
     env = create_env("",  4649, 4, 2,"Hornet Boss 1", "GG_Hornet_1")
     check_env(env, warn=True, skip_render_check=True)
@@ -47,16 +46,16 @@ def main():
         env,
         verbose=1,
         learning_starts=5000,   # to not reinforce bad guesses due to initial exploration (+ let buffer fill up)
-        learning_rate=1e-5,     # how big each update to the Q-network weights is during training.
-        gamma=0.99,             # discount factor: how much an agent prioritizes future rewards over immediate ones
+        learning_rate=7e-5,     # how big each update to the Q-network weights is during training.
+        gamma=0.95,             # discount factor: how much an agent prioritizes future rewards over immediate ones
         tau=1,                  # soft update coeff: how fast the target network moves toward the online network
         buffer_size=100_000,
         batch_size=64,
         train_freq=(4, "step"),
         gradient_steps=1,       # how many gradient updates per step
         exploration_initial_eps=1.0,    # start exploration rate
-        exploration_final_eps=0.1,      # end exploration rate
-        exploration_fraction=0.5,       # expl. rate will linearly decrease from start to end in (exploration_fraction * total_timesteps) steps
+        exploration_final_eps=0.3,      # end exploration rate
+        exploration_fraction=0.7,       # expl. rate will linearly decrease from start to end in (exploration_fraction * total_timesteps) steps
         tensorboard_log="logs/",
     )
     model.set_logger(model_logger)

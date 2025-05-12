@@ -26,7 +26,7 @@ class LoggingCallback(BaseCallback):
             obs_n, info_n, done_n = new_obs[i], infos[i], dones[i]
             #self.logger.info(obs_n)
             self.agent_health[0] += [obs_n[0]]
-            self.boss_health[0] += [obs_n[6]]
+            self.boss_health[0] += [obs_n[27]]
             self.wins_n += 1 if info_n["Win"] else 0
             self.episodes_n += 1 if done_n else 0
             if (done_n):
@@ -37,15 +37,14 @@ class LoggingCallback(BaseCallback):
                 self.logger.record("custom/avg_agent_health", np.mean(self.agent_health))
                 self.logger.record("custom/avg_boss_health", np.mean(self.boss_health))
                 self.logger.record("custom/game_time_seconds",  (now - self.game_started).seconds)
+                self.logger.record("custom/min_boss_health", np.amin(self.boss_health))
                 self.logger.dump(step=self.num_timesteps)
 
                 self.game_started = now
 
                 self.agent_health[i].clear()
                 self.boss_health[i].clear()
-
-
-        if self.num_timesteps % self.log_every_steps == 0:
-            self.logger.record("custom/win_rate", self.wins_n/self.episodes_n if self.episodes_n > 0 else 0)
+        if self.num_timesteps % self.log_every_steps == 0 and self.episodes_n != 0:
+            self.logger.record("custom/win_rate", self.wins_n/self.episodes_n)
 
         return True
