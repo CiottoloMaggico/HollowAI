@@ -42,53 +42,6 @@ def main():
     env_callback = CallbackList([checkpoint_callback, logging_callback])
 
 
-<<<<<<< HEAD
-    best_score = -450
-    score_history = []
-    learn_iters = 0
-    avg_score = 0
-    n_steps = 0
-
-    logger.info("Initialization done, starting training")
-    for i in range(n_games):
-        logging.info(f"Starting game {i}")
-        observation, _ = await env.reset()
-        done = False
-        score = 0
-
-        while not done:
-            action, prob, val = agent.choose_action(observation)
-            logger.info(f"action chosen: {action}")
-
-            observation_, reward, done, _, _ = await env.step(action)
-            n_steps += 1
-            score += reward
-            logger.info(f"new obs:\n{observation_}")
-
-            agent.remember(observation, action, prob, val, reward, done)
-            if n_steps % N == 0:
-                agent.learn()
-                learn_iters += 1
-
-            observation = observation_
-
-        score_history.append(score)
-        avg_score = np.mean(score_history[-100:])
-
-        if avg_score > best_score:
-            best_score = avg_score
-            agent.save_models()
-
-
-        logging.info("Test")
-
-        x = [i + 1 for i in range(len(score_history))]
-        plot_learning_curve(x, score_history, "ppo_learning_curve.png")
-
-        logging.info(
-            f"episode: {i}, score: {score}, avg_score: {avg_score}, time_steps: {n_steps}, learning_steps: {learn_iters}"
-        )
-=======
     model = DQN(
         "MlpPolicy",
         env,
@@ -113,7 +66,6 @@ def main():
         tb_log_name="Main training loop"
     )
     model.save("checkpoints/ppo_hornet_v2")
->>>>>>> 1a554fa22ccaf4cb4438b7fbd3e20c48e2ea876a
 
 if (__name__ == "__main__"):
     main()
