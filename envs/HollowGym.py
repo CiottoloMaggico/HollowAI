@@ -22,6 +22,10 @@ class HollowGym(gym.Env):
         }
         self.observation_space = gym.spaces.Box(low=0.0, high=1.0, shape=(89,), dtype=np.float32)
 
+    def close(self):
+        if self.socket_server.mod_client:
+            self.socket_server.server_thread.stop()
+
     def _get_observation(self, message):
         obs = message["Data"]["Observation"]
         return np.array(
