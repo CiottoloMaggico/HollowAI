@@ -17,7 +17,7 @@ logging.basicConfig(
 )
 model_logger = configure(
     "logs/",
-    ["stdout", "tensorboard"]
+    ["tensorboard"]
 )
 main_logger = logging.getLogger(__name__)
 
@@ -44,7 +44,7 @@ def main():
         env,
         verbose=1,
         learning_starts=5000,   # to not reinforce bad guesses due to initial exploration (+ let buffer fill up)
-        learning_rate=1e-5,     # how big each update to the Q-network weights is during training.
+        learning_rate=1e-4,     # how big each update to the Q-network weights is during training.
         gamma=0.99,             # discount factor: how much an agent prioritizes future rewards over immediate ones
         tau=1,                  # soft update coeff: how fast the target network moves toward the online network
         buffer_size=100_000,
@@ -53,7 +53,7 @@ def main():
         gradient_steps=1,       # how many gradient updates per step
         exploration_initial_eps=1.0,    # start exploration rate
         exploration_final_eps=0.1,      # end exploration rate
-        exploration_fraction=0.5,       # expl. rate will linearly decrease from start to end in (exploration_fraction * total_timesteps) steps
+        exploration_fraction=0.9,       # expl. rate will linearly decrease from start to end in (exploration_fraction * total_timesteps) steps
         tensorboard_log="logs/",
     )
     model.set_logger(model_logger)

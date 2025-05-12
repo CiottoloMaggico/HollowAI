@@ -32,6 +32,8 @@ class LoggingCallback(BaseCallback):
             if (done_n):
                 self.logger.record("custom/avg_agent_health", np.mean(self.agent_health))
                 self.logger.record("custom/avg_boss_health", np.mean(self.boss_health))
+                self.logger.record("custom/min_boss_health", np.amin(self.boss_health))
+
                 self.logger.dump(step=self.num_timesteps)
 
                 self.agent_health[i].clear()
