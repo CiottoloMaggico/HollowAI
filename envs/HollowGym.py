@@ -9,18 +9,18 @@ def create_env(server_ip: str, server_port: int, frame_skip : int, game_speed: f
     socket_server.start()
 
     socket_server.mod_client_ready.wait()
-    env = HollowGym(socket_server = socket_server)
+    env = HollowGym(socket_server = socket_server, observation_size = socket_server.observation_size)
     return env
 
 class HollowGym(gym.Env):
-    def __init__(self, socket_server : HollowGymServer):
+    def __init__(self, socket_server : HollowGymServer, observation_size : int):
         self.socket_server = socket_server
 
         self.action_space = gym.spaces.Discrete(4**4)
         self._action_to_action_code = {
             i : np.base_repr(i, 4, 5)[-4:] for i in range(4**4)
         }
-        self.observation_space = gym.spaces.Box(low=0.0, high=1.0, shape=(89,), dtype=np.float32)
+        self.observation_space = gym.spaces.Box(low=-1.0, high=1.0, shape=(observation_size,), dtype=np.float32)
 
     def _get_observation(self, message):
         obs = message["Data"]["Observation"]
@@ -29,13 +29,16 @@ class HollowGym(gym.Env):
                 obs["PlayerHpPerc"],
                 obs["PlayerMpPerc"],
                 obs["PlayerReserveMpPerc"],
-                *obs["PlayerPos"],
-                obs["PlayerFacingRight"],
+                *obs["PlayerPosition"],
+                *obs["PlayerVelocity"],
+                *obs["PlayerState"],
                 obs["BossHpPerc"],
-                *obs["BossPos"],
+                *obs["BossPosition"],
+                *obs["BossVelocity"],
                 obs["BossFacingRight"],
                 obs["PlayerBossDistance"],
-                *obs["BossFsmStateOneHot"],
+                obs["SceneCenterDistance"],
+                *obs["BossStateOneHot"],
             ], dtype=np.float32,
         )
 
