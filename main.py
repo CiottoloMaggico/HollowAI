@@ -27,7 +27,7 @@ main_logger = logging.getLogger(__name__)
 
 def main():
     total_time_steps = 1_000_000
-    env = create_env(4649, 4, 2,"Hornet Boss 1", "GG_Hornet_1", 87)
+    env = create_env(4649, 1, 2,"Hornet Boss 1", "GG_Hornet_1", 87)
     logger.info("Vectorized environment ready")
 
     checkpoint_callback = CheckpointCallback(
