@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d351a28c-dfbc-4713-8c9b-b38338046599" name="Changes" comment="mod setup">
+    <list default="true" id="d351a28c-dfbc-4713-8c9b-b38338046599" name="Changes" comment="Improved observation, changed hyperparameter settings">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/PPO.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpoints/ppo_hornet_v2.zip" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/ppo_hornet_v2.zip" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/envs/HollowGym.py" beforeDir="false" afterPath="$PROJECT_DIR$/envs/HollowGym.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/logger.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/websockets/servers.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/websockets/servers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -141,7 +140,11 @@
       <workItem from="1746954287960" duration="6924000" />
       <workItem from="1746970459316" duration="3807000" />
       <workItem from="1747039721770" duration="18000" />
-      <workItem from="1747062657065" duration="7836000" />
+      <workItem from="1747062657065" duration="7933000" />
+      <workItem from="1747084805958" duration="985000" />
+      <workItem from="1747120821669" duration="15000" />
+      <workItem from="1747124486879" duration="22000" />
+      <workItem from="1747222437468" duration="19401000" />
     </task>
     <task id="LOCAL-00001" summary="Working gym, need huge refactoring">
       <option name="closed" value="true" />
@@ -223,7 +226,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746971853931</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Improved observation, changed hyperparameter settings">
+      <option name="closed" value="true" />
+      <created>1747083592187</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1747083592187</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -247,9 +258,10 @@
     <MESSAGE value="saving models" />
     <MESSAGE value="adding callbacks" />
     <MESSAGE value="mod setup" />
-    <option name="LAST_COMMIT_MESSAGE" value="mod setup" />
+    <MESSAGE value="Improved observation, changed hyperparameter settings" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved observation, changed hyperparameter settings" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/HollowAI$main.coverage" NAME="main Coverage Results" MODIFIED="1747083496365" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/HollowAI$main.coverage" NAME="main Coverage Results" MODIFIED="1747244139966" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

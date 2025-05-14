@@ -5,6 +5,7 @@ from stable_baselines3 import DQN
 from stable_baselines3.common.callbacks import CheckpointCallback, CallbackList
 from stable_baselines3.common.logger import configure
 from stable_baselines3.common.env_checker import check_env
+from stable_baselines3.common.env_util import make_vec_env
 
 from envs.HollowGym import HollowGym, create_env
 from utils.logger import LoggingCallback
@@ -26,9 +27,8 @@ main_logger = logging.getLogger(__name__)
 
 def main():
     total_time_steps = 1_000_000
-
-    env = create_env("",  4649, 4, 2,"Hornet Boss 1", "GG_Hornet_1")
-    check_env(env, warn=True, skip_render_check=True)
+    env = create_env(4649, 4, 2,"Hornet Boss 1", "GG_Hornet_1", 87)
+    logger.info("Vectorized environment ready")
 
     checkpoint_callback = CheckpointCallback(
         save_freq=25_000,
@@ -39,7 +39,7 @@ def main():
     )
     logging_callback = LoggingCallback(verbose=1, log_every_steps=500)
     env_callback = CallbackList([checkpoint_callback, logging_callback])
-
+    logger.info("Environment callbacks ready")
 
     model = DQN(
         "MlpPolicy",
@@ -59,12 +59,16 @@ def main():
         tensorboard_log="logs/",
     )
     model.set_logger(model_logger)
+
+    logger.info("Model setup completed, starting training...")
     model.learn(
         total_timesteps=total_time_steps,
         callback=env_callback,
         tb_log_name="Main training loop"
     )
+    logger.info("Model training completed, saving model...")
     model.save("checkpoints/ppo_hornet_v2")
+    logger.info("Model saved")
 
 if (__name__ == "__main__"):
     main()
