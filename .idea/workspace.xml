@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d351a28c-dfbc-4713-8c9b-b38338046599" name="Changes" comment="Vectorized environment">
+      <change afterPath="$PROJECT_DIR$/envs/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/envs/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/HollowGym.py" beforeDir="false" afterPath="$PROJECT_DIR$/envs/hollow_gym.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/logger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/websockets/servers.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/websockets/servers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +147,8 @@
       <workItem from="1747120821669" duration="15000" />
       <workItem from="1747124486879" duration="22000" />
       <workItem from="1747222437468" duration="19505000" />
-      <workItem from="1747245747541" duration="16000" />
+      <workItem from="1747245747541" duration="316000" />
+      <workItem from="1747304362015" duration="11594000" />
     </task>
     <task id="LOCAL-00001" summary="Working gym, need huge refactoring">
       <option name="closed" value="true" />
@@ -240,7 +246,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747244369224</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Vectorized environment">
+      <option name="closed" value="true" />
+      <created>1747245781834</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1747245781834</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -269,6 +283,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Vectorized environment" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/HollowAI$main.coverage" NAME="main Coverage Results" MODIFIED="1747244139966" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/HollowAI$main.coverage" NAME="main Coverage Results" MODIFIED="1747324828005" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

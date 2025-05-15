@@ -7,7 +7,7 @@ from stable_baselines3.common.logger import configure
 from stable_baselines3.common.env_checker import check_env
 from stable_baselines3.common.env_util import make_vec_env
 
-from envs.HollowGym import HollowGym, create_env
+from envs.utils import create_env
 from utils.logger import LoggingCallback
 from utils.websockets.servers import HollowGymServer
 
@@ -23,11 +23,12 @@ model_logger = configure(
     ["tensorboard"]
 )
 main_logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
 def main():
     total_time_steps = 1_000_000
-    env = create_env(4649, 1, 2,"Hornet Boss 1", "GG_Hornet_1", 87)
+    env = create_env(4, 2,"Ghost Warrior Marmu", "GG_Ghost_Marmu", n_envs=1)
     logger.info("Vectorized environment ready")
 
     checkpoint_callback = CheckpointCallback(

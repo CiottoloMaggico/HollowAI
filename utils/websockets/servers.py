@@ -32,6 +32,8 @@ class HollowGymServer:
         while not self.all_connected.is_set():
             if len(self.clients) == self.n_clients: self.all_connected.set()
 
+        self.clients[0].master = True
+        logger.info("All the client are connected, waiting for ready signal")
         while not self.ready.is_set():
             if all([client.ready.is_set() for client in self.clients]): self.ready.set()
 
@@ -53,15 +55,17 @@ class HollowGymServer:
 
 
 class HollowClient():
-    def __init__(self, server : HollowGymServer, websocket: ServerConnection, settings):
+    def __init__(self, server : HollowGymServer, websocket: ServerConnection, master : bool = False):
+        self.master = master
         self.server = server
         self.websocket = websocket
-        self.settings = settings
         self.incoming_messages = queue.SimpleQueue()
         self.ready = threading.Event()
         self.closed = threading.Event()
 
+
     def consume(self):
+        self.server.all_connected.wait()
         for message in self.websocket:
             try:
                 json_message = json.loads(message)
@@ -84,17 +88,16 @@ class HollowClient():
             logger.warning(f"Client: is already ready")
             return
         logger.info(f"The client has started the ready handshake")
-        self.send_message(4, None, self.settings)
+        self.send_message(4, None, self.server.client_settings)
 
         response = self.websocket.recv()
         try:
             json_response = json.loads(response)
 
-            if (json_response["Cmd"] == 4):
-                self.observation_size = json_response["Data"]["Info"]["ObservationSize"]
-            else:
+            if not json_response["Cmd"] == 4:
                 logger.warning("wrong response cmd from client, handshake interrupted")
                 return
+            if self.master: self.server.client_settings["ObservationSize"] = json_response["Data"]["Settings"]["ObservationSize"]
         except json.decoder.JSONDecodeError:
             logger.error("response from mod client can't be json decoded, handshake interrupted")
             return
