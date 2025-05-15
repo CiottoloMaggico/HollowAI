@@ -1,5 +1,5 @@
 # HollowAI
-
+A RL agent that beats Hollow Knight bosses
 
 ### Tensorboard Plots
 Use `tensorboard --logdir ./logs` to open tensorboard webserver, and go in **Scalars** tab
