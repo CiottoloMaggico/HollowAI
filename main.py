@@ -27,8 +27,8 @@ logger = logging.getLogger(__name__)
 
 
 def main():
-    total_time_steps = 1_000_000
-    env = create_env(4, 2,"Ghost Warrior Marmu", "GG_Ghost_Marmu", n_envs=1)
+    total_time_steps = 3_000_000
+    env = create_env(4, 2,"Hornet Boss 1", "GG_Hornet_1", n_envs=4, disable_rendering=True, target_framerate=400)
     logger.info("Vectorized environment ready")
 
     checkpoint_callback = CheckpointCallback(
