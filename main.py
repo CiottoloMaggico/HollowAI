@@ -1,16 +1,13 @@
+import datetime
 import logging
 import sys
 
 from stable_baselines3 import DQN
 from stable_baselines3.common.callbacks import CheckpointCallback, CallbackList
-from stable_baselines3.common.logger import configure
-from stable_baselines3.common.env_checker import check_env
-from stable_baselines3.common.env_util import make_vec_env
+from stable_baselines3.common.evaluation import evaluate_policy
 
 from envs.utils import create_env
 from utils.logger import LoggingCallback
-from utils.websockets.servers import HollowGymServer
-
 
 # Create log
 logging.basicConfig(
@@ -18,58 +15,80 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[logging.FileHandler("logs/debug.log"), logging.StreamHandler(sys.stdout)],
 )
-model_logger = configure(
-    "logs/",
-    ["tensorboard"]
-)
+
 main_logger = logging.getLogger(__name__)
 logger = logging.getLogger(__name__)
 
-
 def main():
-    total_time_steps = 3_000_000
-    env = create_env(4, 2,"Hornet Boss 1", "GG_Hornet_1", n_envs=4, disable_rendering=True, target_framerate=400)
-    logger.info("Vectorized environment ready")
+    TOTAL_TIMESTEPS = 1_000_000
+    EVALUATION_EPISODES = 10
+    TARGET_FRAMERATE = 300
+    DISABLE_RENDERING = True
+    FRAME_SKIP = 2
+    N_ENVS = 1
+    GAME_SPEED = 2
+    BOSS_NAME = "Ghost Warrior Marmu"
+    SCENE_NAME = "GG_Ghost_Marmu"
 
+    MODEL_TO_LOAD = None
+    REPLAY_BUFFER_TO_LOAD = None
+    DO_TRAINING = True
+    DO_EVAL = False
+
+    env = create_env(FRAME_SKIP, GAME_SPEED, BOSS_NAME, SCENE_NAME, n_envs=N_ENVS, disable_rendering=DISABLE_RENDERING,
+                     target_framerate=TARGET_FRAMERATE)
+    model_name = f"{BOSS_NAME}_DQN_{datetime.datetime.now()}" if not MODEL_TO_LOAD else MODEL_TO_LOAD
+
+    logger.info("Creating model callbacks")
     checkpoint_callback = CheckpointCallback(
         save_freq=25_000,
         save_path="./checkpoints/",
-        name_prefix="ppo_hornet_v2",
+        name_prefix=model_name,
         save_replay_buffer=True,
         save_vecnormalize=True,
     )
     logging_callback = LoggingCallback(verbose=1, log_every_steps=500)
     env_callback = CallbackList([checkpoint_callback, logging_callback])
-    logger.info("Environment callbacks ready")
+    logger.info("Environment callbacks ready, setting up the model...")
 
-    model = DQN(
-        "MlpPolicy",
-        env,
-        verbose=1,
-        learning_starts=5000,   # to not reinforce bad guesses due to initial exploration (+ let buffer fill up)
-        learning_rate=7e-5,     # how big each update to the Q-network weights is during training.
-        gamma=0.95,             # discount factor: how much an agent prioritizes future rewards over immediate ones
-        tau=1,                  # soft update coeff: how fast the target network moves toward the online network
-        buffer_size=100_000,
-        batch_size=64,
-        train_freq=(4, "step"),
-        gradient_steps=1,       # how many gradient updates per step
-        exploration_initial_eps=1.0,    # start exploration rate
-        exploration_final_eps=0.3,      # end exploration rate
-        exploration_fraction=0.7,       # expl. rate will linearly decrease from start to end in (exploration_fraction * total_timesteps) steps
-        tensorboard_log="logs/",
-    )
-    model.set_logger(model_logger)
 
-    logger.info("Model setup completed, starting training...")
-    model.learn(
-        total_timesteps=total_time_steps,
-        callback=env_callback,
-        tb_log_name="Main training loop"
-    )
-    logger.info("Model training completed, saving model...")
-    model.save("checkpoints/ppo_hornet_v2")
-    logger.info("Model saved")
+    if not MODEL_TO_LOAD:
+        model = DQN(
+            "MlpPolicy",
+            env,
+            verbose=1,
+            learning_starts=5000,  # to not reinforce bad guesses due to initial exploration (+ let buffer fill up)
+            learning_rate=7e-5,  # how big each update to the Q-network weights is during training.
+            gamma=0.95,  # discount factor: how much an agent prioritizes future rewards over immediate ones
+            tau=1,  # soft update coeff: how fast the target network moves toward the online network
+            buffer_size=100_000,
+            batch_size=64,
+            train_freq=(4, "step"),
+            gradient_steps=1,  # how many gradient updates per step
+            exploration_initial_eps=1.0,  # start exploration rate
+            exploration_final_eps=0.3,  # end exploration rate
+            exploration_fraction=0.7, # expl. rate will linearly decrease from start to end in (exploration_fraction * total_timesteps) steps
+            tensorboard_log="./logs/",
+        )
+    else:
+        model = DQN.load(f"./checkpoints/{MODEL_TO_LOAD}", env=env, learning_starts=0)
+        if REPLAY_BUFFER_TO_LOAD: model.load_replay_buffer(path=f"./checkpoints/{REPLAY_BUFFER_TO_LOAD}")
+
+    if DO_TRAINING:
+        logger.info("Model ready, starting training...")
+        model.learn(
+            total_timesteps=TOTAL_TIMESTEPS,
+            callback=env_callback,
+            tb_log_name=model_name,
+        )
+        logger.info("Model training completed, saving model...")
+        model.save(f"./checkpoints/{model_name}")
+        logger.info("Model saved")
+
+    if DO_EVAL and EVALUATION_EPISODES > 0:
+        evaluate_policy(
+            model, env, n_eval_episodes=EVALUATION_EPISODES, callback=env_callback,
+        )
 
 if (__name__ == "__main__"):
     main()

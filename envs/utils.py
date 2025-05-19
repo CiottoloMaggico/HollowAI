@@ -1,13 +1,17 @@
 import gymnasium as gym
 from stable_baselines3.common.env_util import make_vec_env
 from utils.websockets.servers import HollowGymServer
+import logging
 
 import envs
+
+logger = logging.getLogger(__name__)
 
 def create_env(
         frame_skip: int, game_speed: float, boss_name: str, scene_name: str, target_framerate : int = 400,
         disable_rendering: bool = False, server_ip: str = "127.0.0.1", server_port: int = 4649, n_envs: int = 1
 ) -> gym.Env:
+    logger.info("Starting hollowGym server")
     hollow_server = HollowGymServer(
         server_ip=server_ip, server_port=server_port, n_clients=n_envs,
         client_settings={
@@ -17,8 +21,10 @@ def create_env(
         }
     )
     hollow_server.ready.wait()
+    logger.info("HollowGym server ready, creating vectorized environment")
     env = make_vec_env("envs/HollowKnight-v0", env_kwargs={"settings": hollow_server.client_settings}, n_envs=n_envs)
     for i in range(n_envs):
         env.env_method("set_client", hollow_server.clients[i], indices=[i])
 
+    logger.info("Vectorized environment created and ready")
     return env

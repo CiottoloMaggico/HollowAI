@@ -2,6 +2,7 @@ import logging
 import datetime
 
 import numpy as np
+from stable_baselines3.common.utils import safe_mean
 from stable_baselines3.common.callbacks import BaseCallback
 
 class LoggingCallback(BaseCallback):
@@ -28,8 +29,8 @@ class LoggingCallback(BaseCallback):
             self.episodes_n += 1 if done_n else 0
 
             if (done_n):
-                self.logger.record("custom/avg_agent_health", np.mean(self.agent_health))
-                self.logger.record("custom/avg_boss_health", np.mean(self.boss_health))
+                self.logger.record("custom/avg_agent_health", safe_mean(self.agent_health))
+                self.logger.record("custom/avg_boss_health", safe_mean(self.boss_health))
                 self.logger.record("custom/min_boss_health", np.min(self.boss_health))
                 self.logger.dump(step=self.num_timesteps)
 
