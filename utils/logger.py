@@ -9,9 +9,8 @@ from torch.utils.tensorboard import SummaryWriter
 
 
 class LoggingCallback(BaseCallback):
-    def __init__(self, verbose: int = 0, log_every_steps: int = 1000):
+    def __init__(self, verbose: int = 0):
         super().__init__(verbose=verbose)
-        self.log_every_steps = log_every_steps
 
     def _on_training_start(self) -> None:
         self.agent_health = [[] for _ in range(self.training_env.num_envs)]

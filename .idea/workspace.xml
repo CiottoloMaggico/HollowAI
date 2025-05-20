@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d351a28c-dfbc-4713-8c9b-b38338046599" name="Changes" comment="Little refactoring">
+    <list default="true" id="d351a28c-dfbc-4713-8c9b-b38338046599" name="Changes" comment="Improved graphs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/logger.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -151,7 +150,7 @@
       <workItem from="1747465991723" duration="54000" />
       <workItem from="1747647729620" duration="7340000" />
       <workItem from="1747672234093" duration="627000" />
-      <workItem from="1747750506950" duration="5526000" />
+      <workItem from="1747750506950" duration="5656000" />
     </task>
     <task id="LOCAL-00001" summary="Working gym, need huge refactoring">
       <option name="closed" value="true" />
@@ -281,7 +280,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747670682893</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Improved graphs">
+      <option name="closed" value="true" />
+      <created>1747756041743</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1747756041743</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -310,9 +317,10 @@
     <MESSAGE value="Vectorized environment fully working" />
     <MESSAGE value="Vectorized environment with disable rendering and frame cap" />
     <MESSAGE value="Little refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="Little refactoring" />
+    <MESSAGE value="Improved graphs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved graphs" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/HollowAI$main.coverage" NAME="main Coverage Results" MODIFIED="1747755413736" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/HollowAI$main.coverage" NAME="main Coverage Results" MODIFIED="1747756057197" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

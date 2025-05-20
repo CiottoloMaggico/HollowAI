@@ -48,7 +48,7 @@ def main():
         save_replay_buffer=True,
         save_vecnormalize=True,
     )
-    logging_callback = LoggingCallback(verbose=1, log_every_steps=3)
+    logging_callback = LoggingCallback(verbose=1)
     env_callback = CallbackList([checkpoint_callback, logging_callback])
     logger.info("Environment callbacks ready, setting up the model...")
 
