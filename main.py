@@ -20,20 +20,21 @@ main_logger = logging.getLogger(__name__)
 logger = logging.getLogger(__name__)
 
 def main():
+    # Edit training parameters here
     TOTAL_TIMESTEPS = 1_000_000
     EVALUATION_EPISODES = 10
-    TARGET_FRAMERATE = 300
+    TARGET_FRAMERATE = 60
     DISABLE_RENDERING = True
-    FRAME_SKIP = 2
+    FRAME_SKIP = 1
     N_ENVS = 1
     GAME_SPEED = 2
     BOSS_NAME = "Ghost Warrior Marmu"
     SCENE_NAME = "GG_Ghost_Marmu"
-
     MODEL_TO_LOAD = None
     REPLAY_BUFFER_TO_LOAD = None
     DO_TRAINING = True
     DO_EVAL = False
+    # -----------------------------
 
     env = create_env(FRAME_SKIP, GAME_SPEED, BOSS_NAME, SCENE_NAME, n_envs=N_ENVS, disable_rendering=DISABLE_RENDERING,
                      target_framerate=TARGET_FRAMERATE)
@@ -47,7 +48,7 @@ def main():
         save_replay_buffer=True,
         save_vecnormalize=True,
     )
-    logging_callback = LoggingCallback(verbose=1, log_every_steps=500)
+    logging_callback = LoggingCallback(verbose=1, log_every_steps=3)
     env_callback = CallbackList([checkpoint_callback, logging_callback])
     logger.info("Environment callbacks ready, setting up the model...")
 
