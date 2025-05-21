@@ -28,14 +28,14 @@ class LoggingCallback(BaseCallback):
 
         for i in range(0, self.training_env.num_envs):
             obs_n, reward_n, info_n, done_n = new_obs[i], rewards[i], infos[i], dones[i]
-            self.agent_health[0] += [obs_n[0]]
-            self.boss_health[0] += [obs_n[27]]
+            self.agent_health[i] += [obs_n[0]]
+            self.boss_health[i] += [obs_n[27]]
+            self.episode_rewards[i] += reward_n
             self.wins_n += 1 if info_n["Win"] else 0
             self.episodes_n += 1 if done_n else 0
-            self.episode_rewards[i] += reward_n
 
             if not done_n: continue
-            self.tb_formatter.writer.add_scalar("episode/min_boss_health", np.min(self.boss_health), self.episodes_n)
+            self.tb_formatter.writer.add_scalar("episode/min_boss_health", np.min(self.boss_health[i]), self.episodes_n)
             self.tb_formatter.writer.add_scalar("episode/reward", self.episode_rewards[i], self.episodes_n)
             self.tb_formatter.writer.add_scalar("episode/win_rate", self.wins_n/self.episodes_n, self.episodes_n)
             self.tb_formatter.writer.add_scalar("episode/wins", self.wins_n, self.episodes_n)

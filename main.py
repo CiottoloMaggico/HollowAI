@@ -21,15 +21,15 @@ logger = logging.getLogger(__name__)
 
 def main():
     # Edit training parameters here
-    TOTAL_TIMESTEPS = 1_000_000
+    TOTAL_TIMESTEPS = 2_000_000
     EVALUATION_EPISODES = 10
-    TARGET_FRAMERATE = 60
+    TARGET_FRAMERATE = 100
     DISABLE_RENDERING = True
-    FRAME_SKIP = 1
-    N_ENVS = 1
+    FRAME_SKIP = 3
+    N_ENVS = 6
     GAME_SPEED = 2
-    BOSS_NAME = "Ghost Warrior Marmu"
-    SCENE_NAME = "GG_Ghost_Marmu"
+    BOSS_NAME = "Hornet Boss 1"
+    SCENE_NAME = "GG_Hornet_1"
     MODEL_TO_LOAD = None
     REPLAY_BUFFER_TO_LOAD = None
     DO_TRAINING = True
@@ -59,20 +59,20 @@ def main():
             env,
             verbose=1,
             learning_starts=5000,  # to not reinforce bad guesses due to initial exploration (+ let buffer fill up)
-            learning_rate=7e-5,  # how big each update to the Q-network weights is during training.
+            learning_rate=3e-5,  # how big each update to the Q-network weights is during training.
             gamma=0.95,  # discount factor: how much an agent prioritizes future rewards over immediate ones
             tau=1,  # soft update coeff: how fast the target network moves toward the online network
             buffer_size=100_000,
             batch_size=64,
             train_freq=(4, "step"),
             gradient_steps=1,  # how many gradient updates per step
-            exploration_initial_eps=1.0,  # start exploration rate
-            exploration_final_eps=0.3,  # end exploration rate
-            exploration_fraction=0.7, # expl. rate will linearly decrease from start to end in (exploration_fraction * total_timesteps) steps
+            exploration_initial_eps=.95,  # start exploration rate
+            exploration_final_eps=.05,  # end exploration rate
+            exploration_fraction=0.8, # expl. rate will linearly decrease from start to end in (exploration_fraction * total_timesteps) steps
             tensorboard_log="./logs/",
         )
     else:
-        model = DQN.load(f"./checkpoints/{MODEL_TO_LOAD}", env=env, learning_starts=0)
+        model = DQN.load(f"./checkpoints/{MODEL_TO_LOAD}", env=env)
         if REPLAY_BUFFER_TO_LOAD: model.load_replay_buffer(path=f"./checkpoints/{REPLAY_BUFFER_TO_LOAD}")
 
     if DO_TRAINING:
@@ -81,6 +81,7 @@ def main():
             total_timesteps=TOTAL_TIMESTEPS,
             callback=env_callback,
             tb_log_name=model_name,
+            progress_bar = True,
         )
         logger.info("Model training completed, saving model...")
         model.save(f"./checkpoints/{model_name}")
