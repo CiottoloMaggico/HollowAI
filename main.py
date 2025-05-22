@@ -34,7 +34,7 @@ def main():
     env = create_env(**gym)
     if run["load_existing"]:
         logger.info("Loading existing model")
-        model = DQN.load(f"./checkpoints/{agent['load_model']}", env=env)
+        model = DQN.load(f"./checkpoints/{agent['load_model']}", env=env, **agent["hyperparameters"])
         if agent["load_replay_buffer"]: model.load_replay_buffer(path=f"./checkpoints/{agent['load_replay_buffer']}")
         logger.info(f"Successfully loaded existing model")
     else:
