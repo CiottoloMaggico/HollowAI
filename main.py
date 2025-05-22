@@ -22,7 +22,7 @@ def load_config():
 
     logger.info("Config loaded, validating...")
     assert(not conf["run"]["load_existing"] or conf["agent"]["load_model"])
-    assert(conf["run"]["action"] == "training" or conf["agent"]["action"] == "evaluation")
+    assert(conf["run"]["action"] == "training" or conf["run"]["action"] == "evaluation")
     logger.info("Config successfully loaded and validated")
 
     return conf["gym"], conf["agent"], conf["callbacks"], conf["training"], conf["evaluation"], conf["run"]
