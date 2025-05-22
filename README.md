@@ -62,7 +62,7 @@ Instead of reinventing the wheel (and doing it poorly), we rely on the excellent
 - This repo: **HollowAi**
 #### Setup instructions
 1. Create a python environment and install the dependencies.\
-_If your machine have a cuda capable gpu, and you want to use it, install pytorch using the command provided [here](https://pytorch.org/get-started/locally/)._
+_If your machine have a cuda capable gpu, and you want to use it, before installing `requirements.txt` install pytorch using the command provided [here](https://pytorch.org/get-started/locally/)._
 2. Edit the 'config.yaml' file to suit your setup preferencies.
 3. Start **HollowAi** by running `python main.py`.
 4. Launch `n_envs` instances of Hollow Knight.
