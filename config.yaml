@@ -1,0 +1,39 @@
+gym:
+    server_ip: "127.0.0.1"
+    server_port: 4649
+    target_framerate: 400
+    disable_rendering: True
+    frame_skip: 2
+    n_envs: 1
+    game_speed: 2
+    boss_name: "Hornet Boss 1"
+    scene_name: "GG_Hornet_1"
+agent:
+    load_model: ""
+    load_replay_buffer: ""
+    hyperparameters:
+      learning_starts: 0 # to not reinforce bad guesses due to initial exploration (+ let buffer fill up)
+      learning_rate: 0.00003 # how big each update to the Q-network weights is during training.
+      gamma: 0.95 # discount factor: how much an agent prioritizes future rewards over immediate ones
+      tau: 1 # soft update coeff: how fast the target network moves toward the online network
+      buffer_size: 100_000
+      batch_size: 64
+      train_freq: 4 # train every n steps
+      gradient_steps: 1 # how many gradient updates per step
+      exploration_initial_eps: 0.95 # start exploration rate
+      exploration_final_eps: 0.3 # end exploration rate
+      exploration_fraction: 0.8 # expl. rate will linearly decrease from start to end in (exploration_fraction * total_timesteps) steps
+callbacks:
+    checkpoint_callback:
+      save_freq: 25_000
+      save_replay_buffer: True
+      save_vecnormalize: True
+training:
+    total_timesteps: 100_000
+    progress_bar: True
+evaluation:
+    n_eval_episodes: 10
+run:
+  action: "training"
+  load_existing: False
+
