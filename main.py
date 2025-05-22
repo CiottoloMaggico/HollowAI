@@ -3,7 +3,6 @@ import logging
 import sys
 
 from stable_baselines3 import DQN
-from stable_baselines3.common.base_class import BaseAlgorithm
 from stable_baselines3.common.callbacks import CheckpointCallback, CallbackList
 from stable_baselines3.common.evaluation import evaluate_policy
 
@@ -60,7 +59,15 @@ def main():
             tensorboard_log="./logs/",
         )
     else:
-        model = DQN.load(f"./checkpoints/{MODEL_TO_LOAD}", env=env)
+        model = DQN.load(
+            f"./checkpoints/{MODEL_TO_LOAD}",
+            env=env,
+            learning_starts=0,
+            learning_rate=7e-5,
+            exploration_initial_eps=.5,
+            exploration_final_eps=.2,
+            exploration_fraction=1,
+        )
         if REPLAY_BUFFER_TO_LOAD: model.load_replay_buffer(path=f"./checkpoints/{REPLAY_BUFFER_TO_LOAD}")
 
     logger.info("Creating model callbacks")
