@@ -30,10 +30,10 @@ callbacks:
       save_vecnormalize: True
 training:
     total_timesteps: 100_000
-    progress_bar: True
+    progress_bar: True # show the training progress bar
 evaluation:
-    n_eval_episodes: 100
+    n_eval_episodes: 100 # run the evaluation for n episodes
 run:
-  action: "evaluation"
-  load_existing: True
+  action: "evaluation" # "evaluation" or "training"
+  load_existing: True # load an existing model, specified in "model_load"
 
