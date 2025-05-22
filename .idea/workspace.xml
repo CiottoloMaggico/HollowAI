@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d351a28c-dfbc-4713-8c9b-b38338046599" name="Changes" comment="readme and requirements.txt">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,6 +158,7 @@
       <workItem from="1747898721316" duration="5045000" />
       <workItem from="1747908440085" duration="1286000" />
       <workItem from="1747914670100" duration="10228000" />
+      <workItem from="1747929728854" duration="375000" />
     </task>
     <task id="LOCAL-00001" summary="Working gym, need huge refactoring">
       <option name="closed" value="true" />

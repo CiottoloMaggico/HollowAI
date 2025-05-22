@@ -2,7 +2,7 @@ gym:
     server_ip: "127.0.0.1"
     server_port: 4649
     target_framerate: 200
-    disable_rendering: False
+    disable_rendering: True
     frame_skip: 2
     n_envs: 1
     game_speed: 1
