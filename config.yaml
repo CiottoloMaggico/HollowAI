@@ -9,8 +9,8 @@ gym:
     boss_name: "Hornet Boss 1"
     scene_name: "GG_Hornet_1"
 agent:
-    load_model: "./checkpoints/Hornet Boss 1_DQN_2000000_steps.zip_1000000_steps.zip"
-    load_replay_buffer: "./checkpoints/Hornet Boss 1_DQN_2000000_steps.zip_replay_buffer_1000000_steps.pkl"
+    load_model: "Hornet Boss 2_DQN.zip" # only the filename in 'checkpoints/'
+    load_replay_buffer: "Hornet Boss 2_DQN_1000000_replay_buffer_steps.pkl" # only the filename in 'checkpoints/'
     hyperparameters:
       learning_starts: 0 # to not reinforce bad guesses due to initial exploration (+ let buffer fill up)
       learning_rate: 0.00003 # how big each update to the Q-network weights is during training.
