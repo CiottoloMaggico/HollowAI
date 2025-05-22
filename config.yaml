@@ -1,16 +1,16 @@
 gym:
     server_ip: "127.0.0.1"
     server_port: 4649
-    target_framerate: 400
-    disable_rendering: True
+    target_framerate: 200
+    disable_rendering: False
     frame_skip: 2
     n_envs: 1
-    game_speed: 2
+    game_speed: 1
     boss_name: "Hornet Boss 1"
     scene_name: "GG_Hornet_1"
 agent:
-    load_model: ""
-    load_replay_buffer: ""
+    load_model: "./checkpoints/Hornet Boss 1_DQN_2000000_steps.zip_1000000_steps.zip"
+    load_replay_buffer: "./checkpoints/Hornet Boss 1_DQN_2000000_steps.zip_replay_buffer_1000000_steps.pkl"
     hyperparameters:
       learning_starts: 0 # to not reinforce bad guesses due to initial exploration (+ let buffer fill up)
       learning_rate: 0.00003 # how big each update to the Q-network weights is during training.
@@ -32,8 +32,8 @@ training:
     total_timesteps: 100_000
     progress_bar: True
 evaluation:
-    n_eval_episodes: 10
+    n_eval_episodes: 100
 run:
-  action: "training"
-  load_existing: False
+  action: "evaluation"
+  load_existing: True
 
