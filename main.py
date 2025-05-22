@@ -3,11 +3,12 @@ import logging
 import sys
 
 from stable_baselines3 import DQN
+from stable_baselines3.common.base_class import BaseAlgorithm
 from stable_baselines3.common.callbacks import CheckpointCallback, CallbackList
 from stable_baselines3.common.evaluation import evaluate_policy
 
 from envs.utils import create_env
-from utils.logger import LoggingCallback
+from utils.logger import LoggingCallback, EvaluationLogger
 
 # Create log
 logging.basicConfig(
@@ -21,37 +22,24 @@ logger = logging.getLogger(__name__)
 
 def main():
     # Edit training parameters here
-    TOTAL_TIMESTEPS = 2_000_000
-    EVALUATION_EPISODES = 10
+    TOTAL_TIMESTEPS = 100000
+    EVALUATION_EPISODES = 4
     TARGET_FRAMERATE = 100
-    DISABLE_RENDERING = True
-    FRAME_SKIP = 3
-    N_ENVS = 6
-    GAME_SPEED = 2
+    DISABLE_RENDERING = False
+    FRAME_SKIP = 1
+    N_ENVS = 1
+    GAME_SPEED = 1
     BOSS_NAME = "Hornet Boss 1"
     SCENE_NAME = "GG_Hornet_1"
-    MODEL_TO_LOAD = None
-    REPLAY_BUFFER_TO_LOAD = None
-    DO_TRAINING = True
-    DO_EVAL = False
+    MODEL_TO_LOAD = "Hornet Boss 1_DQN_2025-05-21 18:15:00.057472_300000_steps.zip"
+    REPLAY_BUFFER_TO_LOAD = "Hornet Boss 1_DQN_2025-05-21 18:15:00.057472_replay_buffer_300000_steps.pkl"
+    DO_TRAINING = False
+    DO_EVAL = True
     # -----------------------------
 
     env = create_env(FRAME_SKIP, GAME_SPEED, BOSS_NAME, SCENE_NAME, n_envs=N_ENVS, disable_rendering=DISABLE_RENDERING,
                      target_framerate=TARGET_FRAMERATE)
     model_name = f"{BOSS_NAME}_DQN_{datetime.datetime.now()}" if not MODEL_TO_LOAD else MODEL_TO_LOAD
-
-    logger.info("Creating model callbacks")
-    checkpoint_callback = CheckpointCallback(
-        save_freq=25_000,
-        save_path="./checkpoints/",
-        name_prefix=model_name,
-        save_replay_buffer=True,
-        save_vecnormalize=True,
-    )
-    logging_callback = LoggingCallback(verbose=1)
-    env_callback = CallbackList([checkpoint_callback, logging_callback])
-    logger.info("Environment callbacks ready, setting up the model...")
-
 
     if not MODEL_TO_LOAD:
         model = DQN(
@@ -75,6 +63,19 @@ def main():
         model = DQN.load(f"./checkpoints/{MODEL_TO_LOAD}", env=env)
         if REPLAY_BUFFER_TO_LOAD: model.load_replay_buffer(path=f"./checkpoints/{REPLAY_BUFFER_TO_LOAD}")
 
+    logger.info("Creating model callbacks")
+    checkpoint_callback = CheckpointCallback(
+        save_freq=25_000,
+        save_path="./checkpoints/",
+        name_prefix=model_name,
+        save_replay_buffer=True,
+        save_vecnormalize=True,
+    )
+    logging_callback = LoggingCallback(verbose=1)
+    eval_callback = EvaluationLogger(f"./logs/eval/{model_name}", N_ENVS)
+    env_callback = CallbackList([checkpoint_callback, logging_callback])
+    logger.info("Environment callbacks ready")
+
     if DO_TRAINING:
         logger.info("Model ready, starting training...")
         model.learn(
@@ -89,7 +90,7 @@ def main():
 
     if DO_EVAL and EVALUATION_EPISODES > 0:
         evaluate_policy(
-            model, env, n_eval_episodes=EVALUATION_EPISODES, callback=env_callback,
+            model, env, n_eval_episodes=EVALUATION_EPISODES, callback=eval_callback
         )
 
 if (__name__ == "__main__"):
