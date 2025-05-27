@@ -3,7 +3,7 @@ This repo implements a reinforcement learning agent that (hopefully) beats bosse
 ## 🧠 How it works:
 HollowAi is actually an interface between: 
 - **sb3 agents** 
-- **HollowGym**, our custom mod that exposes a Gym-like environment for Hollow Knight\
+- [**HollowGym**](https://github.com/CiottoloMaggico/HKFeeder), our custom mod that exposes a Gym-like environment for Hollow Knight
 
 HollowGym handles the game logic: controlling the character, gathering observations, and computing rewards. Communication between HollowAI and HollowGym happens via WebSocket, using JSON-encoded messages.
 ### Communication protocol
