@@ -1,5 +1,6 @@
 # HollowAI
-This repo implements a reinforcement learning agent that (hopefully) beats bosses in _Hollow Knight_.
+This repo features a reinforcement learning agent trained to (hopefully) beat the bosses of _Hollow Knight_.
+
 ## 🧠 How it works:
 HollowAi is actually an interface between: 
 - **sb3 agents** 
