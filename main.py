@@ -56,7 +56,7 @@ def main():
         logger.info("Model saved")
     else:
         eval_callback = EvaluationLogger(f"./logs/{model_name}", gym["n_envs"])
-        evaluate_policy(model, env, callback=eval_callback, deterministic=True, **eval)
+        evaluate_policy(model, env, callback=eval_callback, deterministic=False, **eval)
 
 if (__name__ == "__main__"):
     main()
