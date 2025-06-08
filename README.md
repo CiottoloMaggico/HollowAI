@@ -1,6 +1,4 @@
-# HollowAI
-
-![Hi-res-Hollow-AIReinforcement Learning for Hollow Knight](https://github.com/user-attachments/assets/0a9f1788-590a-4a34-8df5-93f2e6fd9bb6)
+![Hi-res-black](https://github.com/user-attachments/assets/74c973cb-3c2a-418d-82cc-345ed2ecb887)
 
 This repo features a reinforcement learning agent trained to (hopefully) beat the bosses of _Hollow Knight_.
 
