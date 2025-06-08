@@ -1,4 +1,9 @@
-![Hi-res-black](https://github.com/user-attachments/assets/74c973cb-3c2a-418d-82cc-345ed2ecb887)
+
+<picture>
+  <source srcset="https://github.com/user-attachments/assets/84bf41bf-02b3-4b5d-86ff-d53681caa579" media="(prefers-color-scheme: light)">
+  <source srcset="https://github.com/user-attachments/assets/b4d25d3a-e64b-4024-8ddb-4b667ab97b92" media="(prefers-color-scheme: dark)">
+  <img src="https://github.com/user-attachments/assets/b4d25d3a-e64b-4024-8ddb-4b667ab97b92" alt="Your image description">
+</picture>
 
 This repo features a reinforcement learning agent trained to (hopefully) beat the bosses of _Hollow Knight_.
 
